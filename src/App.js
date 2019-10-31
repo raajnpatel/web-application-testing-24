@@ -3,14 +3,15 @@ import logo from './logo.svg';
 import './App.css';
 import Dashboard from "./components/Dashboard";
 import Display from "./components/Display";
+import {useLocalStorage} from "./hooks/useLocalStorage";
 
 function App() {
-  const [strike, setStrike] = useState(0);
-  const [balls, setBalls] = useState(0);
-  const [outs, setOuts] = useState(0);
-  const [inning, setInning] = useState(1);
-  const [base, setBase] = useState(0);
-  const [score, setScore] = useState(0);
+  const [strike, setStrike] = useLocalStorage(1, 0);
+  const [balls, setBalls] = useLocalStorage(2, 0);
+  const [outs, setOuts] = useLocalStorage(3, 0);
+  const [inning, setInning] = useLocalStorage(4, 1);
+  const [base, setBase] = useLocalStorage(5, 0);
+  const [score, setScore] = useLocalStorage(6, 0);
 
   const StrikeUp = () => {
     if (strike < 2) {
