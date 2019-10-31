@@ -7,29 +7,64 @@ import Display from "./components/Display";
 function App() {
   const [strike, setStrike] = useState(0);
   const [balls, setBalls] = useState(0);
+  const [outs, setOuts] = useState(0);
+  const [inning, setInning] = useState(1);
+  const [base, setBase] = useState(0);
+  const [score, setScore] = useState(0);
 
   const StrikeUp = () => {
     if (strike < 2) {
       setStrike(strike + 1);
-    } else {
+    }else if (outs < 2) {
+      setOuts(outs + 1);
       setStrike(0);
       setBalls(0);
+    } else {
+      setInning(inning + 1);
+      setStrike(0);
+      setBalls(0);
+      setOuts(0)
     }
   };
 
   const BallsUp = () => {
     if (balls < 3) {
       setBalls(balls + 1);
-    } else {
+    } else if (base < 3) {
+      setBase(base + 1);
       setStrike(0);
       setBalls(0);
+    } else {
+      setScore(score + 1);
+      setStrike(0);
+      setBalls(0);
+      setBase(0);
     }
   };
 
+  const RandomNum = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min)
+  }
+
   const Hit = () => {
-    setStrike(0);
-    setBalls(0);
-  };
+    RandomNum(0, 100);
+
+    if (base < 3 && 50 <= RandomNum <= 100) {
+      setBase(base + 1);
+      setStrike(0);
+      setBalls(0);
+    } else if (base < 3 && 0 <= RandomNum < 50) {
+      setBase(base + 2);
+      setStrike(0);
+      setBalls(0);
+    } else {
+      setScore(score + 1);
+      setBase(0);
+    }
+  }
+
 
   const Foul = () => {
     if (strike < 2) {
@@ -37,12 +72,13 @@ function App() {
     }
   };
 
+
   return (
     <div className="App">
-      <Display strike={strike} balls={balls}/>
+      <Display strike={strike} balls={balls} score={score} base={base} outs={outs} inning={inning}/>
       <Dashboard StrikeUp={StrikeUp} BallsUp={BallsUp} Hit={Hit} Foul={Foul}/>
     </div>
-  );
-}
+  )
+};
 
 export default App;
