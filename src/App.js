@@ -49,13 +49,14 @@ function App() {
   }
 
   const Hit = () => {
-    RandomNum(0, 100);
 
-    if (base < 3 && 50 <= RandomNum <= 100) {
+    let RandomNumber = RandomNum(0, 100);
+    console.log(RandomNumber);
+    if (base < 3 && 50 < RandomNumber < 100) {
       setBase(base + 1);
       setStrike(0);
       setBalls(0);
-    } else if (base < 3 && 0 <= RandomNum < 50) {
+    } else if (base < 3 && 0 < RandomNumber < 50) {
       setBase(base + 2);
       setStrike(0);
       setBalls(0);
